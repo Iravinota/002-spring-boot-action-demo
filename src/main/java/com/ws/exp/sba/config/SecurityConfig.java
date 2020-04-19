@@ -9,10 +9,16 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SecurityConfig
@@ -31,12 +37,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 基于内存的用户存储
-        // 由于spring5把默认的 NoOpPasswordEncoder 改成了DelegatingPasswordEncoder，所以需要在设置密码时，加上{noop}
-        // https://mkyong.com/spring-boot/spring-security-there-is-no-passwordencoder-mapped-for-the-id-null/?__cf_chl_captcha_tk__=6c36ce02c69c33b6780a1a1da43886033b9a7785-1587295118-0-AeT25ebaW9E_sJctsW6-UMfJCCfzEigjW1nTyBeo2xpbAF2n9YdXSmCbR1cQPRCjZ9Yzq7bnGrlxwcJ45Om3HhOFZJocwH9QbW4906jKpmBZCWNCZqBR8fG2pX2mZShbLpghSyV2bRlBT4NTKX3YB2BqQCZj-dQ9RQaJhONvl-9_t6T5NAB_RPLVHmTczF312xcuSdTfg5XmKbSw9WxKX3Q8ELoVQqJSJ_Zi00cjQH4iDPq0K1CUzqoQgjmZ1hYPKeEYVAxm7cpzgNMLuhEsmjJZKMcp6EhUcCkBVb9uj-stdGW7SmQhuEvMoMsL5uuyxtM0Hw2gBuU2cAWiUO-na7ZMCGxecTBDXK7Dq_YWpJ1S6Ljmp99Ef5ZnmSasC-IWdAQJoNpryOsZMBdPr9DTo2wv3JyT5RG_FFrqCYoGCtzLitgP5Mn2JdxfwJBi6idtEEI3C8v0b3juX173IP114AjDq4lOSdePodCssXrsWLz7
-        auth.inMemoryAuthentication()
-                .withUser("user").password("{noop}password").roles("USER") // 为USER自动添加ROLE_前缀
-                .and()
-                .withUser("admin").password("{noop}password").roles("USER", "ADMIN");
+        // 自定义用户服务
+        auth.userDetailsService(new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+                List<GrantedAuthority> authorities = new ArrayList<>();
+                authorities.add(new SimpleGrantedAuthority("ROLE_SPITTER"));
+                // 只有test/test才能通过验证
+                return new User("test", "{noop}test", authorities);
+            }
+        });
     }
 }
