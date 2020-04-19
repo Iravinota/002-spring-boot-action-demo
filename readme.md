@@ -1,6 +1,6 @@
 # spring boot in action demo
 
-## Chapter 2
+## Chapter 2 - 自动配置
 
 spring-boot使用起步依赖和自动配置，自动拼装了bean
 
@@ -13,3 +13,9 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
 - 由于有Thymeleaf，所以会配置Thymeleaf为Spring MVC的视图，并自动解析/src/resources/templates中的模板
 - 由于依赖了spring-boot-starter-web，所以会自动配置DispacherServlet并启用Spring MVC，并自动扫描/src/resources/static中网页
 - 自动启用嵌入式tomcat
+
+## Chapter 3 - 自定义配置 - Security
+
+在Chapter 2代码的基础上，只是添加上spring-boot-startere-security的依赖，就可以在进入http://localhost:8080/readingList/asss时，添加上安全验证，跳转到一个默认的登陆页面。用户名是user，会在启动日志中打印一个随机密码
+
+- 由于spring-boot-starter-data-jpa和书上的版本不一样，所以SecurityConfig中的代码有些不同
