@@ -19,3 +19,4 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
 在Chapter 2代码的基础上，只是添加上spring-boot-startere-security的依赖，就可以在进入http://localhost:8080/readingList/asss时，添加上安全验证，跳转到一个默认的登陆页面。用户名是user，会在启动日志中打印一个随机密码
 
 - 由于spring-boot-starter-data-jpa和书上的版本不一样，所以SecurityConfig中的代码有些不同
+- 依赖hibernate之后，会自动创建@Entity对应的表，但是不会执行schema.sql和data.sql。需在application.properties中配置spring.jpa.hibernate.ddl-auto=none，关闭hibernate自动创建表
