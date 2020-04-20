@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,11 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +34,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    @Autowired
 //    private DataSource dataSource;
 
+
+    /**
+     * 对每个请求（URL）进行细粒度安全控制
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .formLogin()  // 启用默认的登录页
+            .and()
+            .csrf().disable()   // spring security默认启用CSRF保护，POST时必须验证token。 https://blog.csdn.net/t894690230/article/details/52404105
+            .authorizeRequests()
+                .antMatchers("/readingList/**").hasRole("USER")  // "ROLE_USER"
+                .anyRequest().permitAll();
+    }
+
     /**
      * 通过重载，配置user-detail服务。用来进行用户认证（用户名、密码登陆验证）
      */
@@ -48,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
                 List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority("ROLE_SPITTER"));
+                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
                 // 只有test/test才能通过验证
 //                return new User("test", "{noop}test", authorities);
 

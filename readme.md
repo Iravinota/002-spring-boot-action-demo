@@ -20,3 +20,8 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
 
 - 由于spring-boot-starter-data-jpa和书上的版本不一样，所以SecurityConfig中的代码有些不同
 - 依赖hibernate之后，会自动创建@Entity对应的表，但是不会执行schema.sql和data.sql。需在application.properties中配置spring.jpa.hibernate.ddl-auto=none，关闭hibernate自动创建表
+- SecurityConfig中是Spring Security的相关配置
+  - configure(HttpSecurity http): 对每个请求（URL）进行细粒度安全控制
+    - spring security默认启用CSRF保护，POST时必须验证token。 https://blog.csdn.net/t894690230/article/details/52404105
+  - configure(AuthenticationManagerBuilder auth): 用来进行用户认证（用户名、密码登陆验证）
+
