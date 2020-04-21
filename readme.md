@@ -39,6 +39,7 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
 安全测试：
 
 - pom.xml中添加org.springframework.security:spring-security-test
+- 使用@WithUserDetails测试时，需要把SecurityConfig.java中的UserDetailsService设置为一个单独的Bean
 
 其它配置：
 
