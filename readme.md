@@ -27,9 +27,22 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
 
 ## Chapter 4 - test
 
+集成测试
+
 - MockMvcWebTests测试类
 - @RunWith(SpringJUnit4ClassRunner.class)需要pom.xml中包含spring-boot-starter-test，且没有exclusion junit-vintage-engine
 - @WebAppConfiguration: 启动web mvc测试
 - 使用MockMvc对web进行测试
 - Hibernate使用import.sql插入数据
 - 如果配置spring.jpa.hibernate.ddl-auto=none，则需要自己写SQL脚本来创建表和插入数据，且需要创建Book所用的HIBERNATE_SEQUENCE
+
+安全测试：
+
+- pom.xml中添加org.springframework.security:spring-security-test
+
+其它配置：
+
+- Profile:
+  - 通过在application.properties中配置spring.profiles.active=dev，使用application-dev.properties中的配置启动spring boot
+  - application-{label}.properties
+  - spring.profiles.active={label}

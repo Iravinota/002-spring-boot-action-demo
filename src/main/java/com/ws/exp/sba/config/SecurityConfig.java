@@ -90,6 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 } else {
                     log.info("username: " + reader.getUsername());
                     log.info("password: " + reader.getPassword());
+                    // 设置username, password, ROLE_USER
                     return new User(reader.getUsername(), reader.getPassword(), authorities);
                 }
             }
