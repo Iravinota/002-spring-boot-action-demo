@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,8 @@ public class ReadingListController {
         List<Book> readingList = bookService.findByReader(reader);
         if (readingList != null && !readingList.isEmpty()) {
             model.addAttribute("books", readingList);
+        } else {
+            model.addAttribute("books", new ArrayList<>());
         }
         return "readingList";
     }

@@ -25,3 +25,11 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
     - spring security默认启用CSRF保护，POST时必须验证token。 https://blog.csdn.net/t894690230/article/details/52404105
   - configure(AuthenticationManagerBuilder auth): 用来进行用户认证（用户名、密码登陆验证）
 
+## Chapter 4 - test
+
+- MockMvcWebTests测试类
+- @RunWith(SpringJUnit4ClassRunner.class)需要pom.xml中包含spring-boot-starter-test，且没有exclusion junit-vintage-engine
+- @WebAppConfiguration: 启动web mvc测试
+- 使用MockMvc对web进行测试
+- Hibernate使用import.sql插入数据
+- 如果配置spring.jpa.hibernate.ddl-auto=none，则需要自己写SQL脚本来创建表和插入数据，且需要创建Book所用的HIBERNATE_SEQUENCE
