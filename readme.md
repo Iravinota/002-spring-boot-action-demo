@@ -24,6 +24,12 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
   - configure(HttpSecurity http): 对每个请求（URL）进行细粒度安全控制
     - spring security默认启用CSRF保护，POST时必须验证token。 https://blog.csdn.net/t894690230/article/details/52404105
   - configure(AuthenticationManagerBuilder auth): 用来进行用户认证（用户名、密码登陆验证）
+  
+设置自定义参数:
+
+- @ConfigurationProperties(prefix = "amazon") // spring boot已经自动添加了@EnableConfigurationProperties注解
+  - 添加@ConfigurationProperties注解后IDEA会提示错误，没关系，不用管，IDEA版本问题。参考https://stackoverflow.com/questions/42839126/configurationproperties-spring-boot-configuration-annotation-processor-not-foun
+
 
 ## Chapter 4 - test
 
