@@ -56,3 +56,14 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
   - spring.profiles.active={label}
 - Thymeleaf:
   - readingList.html中，xmlns:th="http://thymeleaf.org"，注意这里没有www，这样这个thymeleaf页就不会有红线了
+
+## Chapter 7 Actuator
+
+- application.properties中配置
+
+```properties
+# 显示详细health信息
+management.endpoint.health.show-details=always
+# 显示所有actuator
+management.endpoints.web.exposure.include=*
+```
