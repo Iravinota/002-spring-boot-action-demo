@@ -20,6 +20,8 @@
             <span th:if="${book.description eq null}">
                 No description available</span>
         </dd>
+        <a th:href="'http://www.amazon.com/gp/product/' + ${book.isbn} + '/tag=' + ${amazonID}"
+           th:text="${book.title}">Title</a>
     </dl>
 </div>
 <div th:if="${#lists.isEmpty(books)}">

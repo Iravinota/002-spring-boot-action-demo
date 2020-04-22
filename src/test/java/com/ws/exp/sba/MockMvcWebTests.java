@@ -76,6 +76,8 @@ public class MockMvcWebTests {
                 .andExpect(view().name("readingList"))
                 .andExpect(model().attributeExists("books"))
                 .andExpect(model().attribute("books", hasSize(1)))
-                .andExpect(model().attribute("books", contains(samePropertyValuesAs(expectedBook))));
+                .andExpect(model().attribute("books", contains(samePropertyValuesAs(expectedBook))))
+                .andExpect(model().attribute("amazonID", "habuma-20"))
+        ;
     }
 }

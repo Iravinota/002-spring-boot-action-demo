@@ -47,3 +47,5 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
   - 通过在application.properties中配置spring.profiles.active=dev，使用application-dev.properties中的配置启动spring boot
   - application-{label}.properties
   - spring.profiles.active={label}
+- Thymeleaf:
+  - readingList.html中，xmlns:th="http://thymeleaf.org"，注意这里没有www，这样这个thymeleaf页就不会有红线了
