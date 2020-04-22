@@ -1,5 +1,6 @@
 package com.ws.exp.sba.controller;
 
+import com.ws.exp.sba.config.AmazonProperties;
 import com.ws.exp.sba.model.Book;
 import com.ws.exp.sba.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +21,18 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/readingList")
-@ConfigurationProperties(prefix = "amazon") // spring boot已经自动添加了@EnableConfigurationProperties注解
-// 添加@ConfigurationProperties注解后IDEA会提示错误，没关系，不用管，IDEA版本问题。参考https://stackoverflow.com/questions/42839126/configurationproperties-spring-boot-configuration-annotation-processor-not-foun
 public class ReadingListController {
-    private String associateId;
     private BookService bookService;
+    private AmazonProperties amazonProperties;
 
     @Autowired
     public void setBookService(BookService bookService) {
         this.bookService = bookService;
     }
 
-    public void setAssociateId(String associateId) {
-        this.associateId = associateId;
+    @Autowired
+    public void setAmazonProperties(AmazonProperties amazonProperties) {
+        this.amazonProperties = amazonProperties;
     }
 
     @RequestMapping(value = "/{reader}", method = RequestMethod.GET)
@@ -40,7 +40,7 @@ public class ReadingListController {
         List<Book> readingList = bookService.findByReader(reader);
         if (readingList != null && !readingList.isEmpty()) {
             model.addAttribute("books", readingList);
-            model.addAttribute("amazonID", associateId);
+            model.addAttribute("amazonID", amazonProperties.getAssociateId());
         } else {
             model.addAttribute("books", new ArrayList<>());
         }
