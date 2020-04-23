@@ -56,6 +56,14 @@ spring-boot使用起步依赖和自动配置，自动拼装了bean
   - spring.profiles.active={label}
 - Thymeleaf:
   - readingList.html中，xmlns:th="http://thymeleaf.org"，注意这里没有www，这样这个thymeleaf页就不会有红线了
+  
+删除schema.sql，否则执行mvn test时会报错。错误信息时insert时主键冲突。之所以会出现这个原因，
+可能执行mvn test时，ApplicationTest.java执行了import.sql，使得数据库中存在一条记录。在执
+行MockMvcWebSecurityTests.java时，又执行了schema.sql，导致数据库中主键冲突。
+
+或者留着schema.sql，但是删除ApplicationTest.java，这样执行另外两个测试类时，也不会执行
+schema.sql，只会执行import.sql。至于为什么会这样，可能需要详细看下Hibernate是如何自动加载
+配置数据的了。
 
 ## Chapter 7 Actuator
 
